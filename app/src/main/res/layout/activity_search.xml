@@ -53,7 +53,8 @@
         android:id="@+id/spinner"
         android:layout_below="@+id/textView2"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="60dp" />
+        android:layout_marginTop="60dp"
+        android:spinnerMode="dropdown" />
 
     <EditText
         android:layout_width="wrap_content"
