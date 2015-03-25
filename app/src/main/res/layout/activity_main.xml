@@ -9,6 +9,7 @@
         android:src = "@drawable/eetnu"
         android:layout_width="400dp"
         android:layout_height="100dp"
+        android:layout_marginLeft="0dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
@@ -25,10 +26,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Via deze App kan er op restaurants gezocht worden, dit door middel van categorie en via waarderingen van klanten. Ook kan er contactgegevens gevonden worden van restaurants en kunnen er reviews bekeken worden."
+        android:text="Via deze App kan er op restaurants gezocht worden, dit door middel van categorie en via waarderingen van klanten."
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="26dp" />
+        android:layout_marginTop="26dp"/>
     <ImageView
         android:src = "@drawable/end"
         android:layout_width="400dp"
@@ -44,5 +45,6 @@
         android:id="@+id/button"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/imageView"
+        android:onClick="Next"
         android:layout_alignParentEnd="true" />
 </RelativeLayout>
