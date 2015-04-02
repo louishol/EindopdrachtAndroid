@@ -48,13 +48,13 @@
         android:id="@+id/textView2" />
 
     <Spinner
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinner"
         android:layout_below="@+id/textView2"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="60dp"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dialog"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -81,6 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Zoek restauranten"
+        android:onClick="btnzoek"
         android:id="@+id/button2"
         android:layout_above="@+id/imageView"
         android:layout_alignParentStart="true"
