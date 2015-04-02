@@ -1,9 +1,12 @@
 package com.example.louis.eindopdrachtandroid;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -24,6 +27,7 @@ public class SearchActivity extends ActionBarActivity {
 
     private String getApiURI()
     {
+
         String url = "https://api.eet.nu/venues?";
 
         Spinner mySpinner;
@@ -76,8 +80,8 @@ public class SearchActivity extends ActionBarActivity {
         Categories.add("Steak-house");
         Categories.add("Surinamese");
         Categories.add("Sushi");
-        Categories.add("tapas");
-        Categories.add("thai");
+        Categories.add("Tapas");
+        Categories.add("Thai");
         Categories.add("turkish");
         Categories.add("Vietnamese");
         Categories.add("Western-european");
@@ -94,15 +98,9 @@ public class SearchActivity extends ActionBarActivity {
 
         String txtFromSpinner = mySpinner.getSelectedItem().toString();
 
-        return "Dit wordt de URI naar lala";
-    }
+        url += "tags=" + txtFromSpinner +"&";
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_search, menu);
-        return true;
+        return url;
     }
 
     @Override
@@ -119,4 +117,12 @@ public class SearchActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void btnzoek(View view)
+    {
+        Intent result = new Intent(this, ResultActivity.class);
+        startActivity(result);
+    }
+
+
 }
