@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.louis.eindopdrachtandroid.Models.*;
 
 
 public class SearchActivity extends ActionBarActivity {
@@ -102,6 +105,8 @@ public class SearchActivity extends ActionBarActivity {
         return url;
     }
 
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -119,8 +124,20 @@ public class SearchActivity extends ActionBarActivity {
 
     public void btnzoek(View view)
     {
-        Intent result = new Intent(this, ResultActivity.class);
-        startActivity(result);
+        // getApiURI nog meesturen naar de fragment
+        detailFragment displayFrag = (detailFragment) getFragmentManager().findFragmentById(R.id.fragDetails);
+
+        if(displayFrag == null)
+        {
+            Intent intent = new Intent(this, ResultActivity.class);
+            startActivity(intent);
+
+        }
+        else
+        {
+            // Hier komt tablet rechter view
+            //displayFrag.updateContent(position, text);
+        }
     }
 
 

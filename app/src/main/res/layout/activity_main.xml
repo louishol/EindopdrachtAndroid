@@ -47,4 +47,6 @@
         android:layout_above="@+id/imageView"
         android:onClick="Next"
         android:layout_alignParentEnd="true" />
+
+
 </RelativeLayout>
