@@ -95,7 +95,6 @@ public class SearchActivity extends ActionBarActivity {
         mySpinner = (Spinner) findViewById(R.id.spinner);
         mySpinner.setAdapter(adapter);
 
-
         String txtFromSpinner = mySpinner.getSelectedItem().toString();
 
         url += "tags=" + txtFromSpinner +"&";
