@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import java.net.URL;
@@ -18,23 +19,16 @@ import com.example.louis.eindopdrachtandroid.Models.*;
 
 
 public class SearchActivity extends ActionBarActivity {
-
+    Spinner mySpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        getApiURI();
+        fillList();
     }
 
-
-
-    private String getApiURI()
+    private void fillList()
     {
-
-        String url = "https://api.eet.nu/venues?";
-
-        Spinner mySpinner;
-
         List<String> Categories =  new ArrayList<String>();
         Categories.add("Alle categorien");
         Categories.add("African");
@@ -90,7 +84,6 @@ public class SearchActivity extends ActionBarActivity {
         Categories.add("Western-european");
         Categories.add("Wok");
 
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, Categories);
 
@@ -98,10 +91,18 @@ public class SearchActivity extends ActionBarActivity {
         mySpinner = (Spinner) findViewById(R.id.spinner);
         mySpinner.setAdapter(adapter);
 
+    }
+
+    private String getApiURI()
+    {
+
+        String url = "https://api.eet.nu/venues?";
         String txtFromSpinner = mySpinner.getSelectedItem().toString();
-
-        url += "tags=" + txtFromSpinner +"&";
-
+        CheckBox checkbox = (CheckBox) findViewById(R.id.sort);
+        if(txtFromSpinner != "Alle categorien")
+            url += "tags="+ txtFromSpinner + "&";
+        if(checkbox.isChecked())
+            url += "sort_by=rating";
         return url;
     }
 
@@ -126,12 +127,12 @@ public class SearchActivity extends ActionBarActivity {
     {
         // getApiURI nog meesturen naar de fragment
         detailFragment displayFrag = (detailFragment) getFragmentManager().findFragmentById(R.id.fragDetails);
-
+        String url = getApiURI();
         if(displayFrag == null)
         {
             Intent intent = new Intent(this, ResultActivity.class);
+            intent.putExtra("url", url);
             startActivity(intent);
-
         }
         else
         {

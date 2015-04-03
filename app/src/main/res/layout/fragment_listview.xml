@@ -27,15 +27,12 @@
 
 
 
-
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Zoek resultaten"
-        android:id="@+id/textView3"
+        android:id="@+id/txtResults"
         android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:layout_below="@+id/first_image"
@@ -45,8 +42,8 @@
         android:id="@+id/ListZoek"
         android:layout_width="fill_parent"
         android:layout_above="@+id/imageView"
-        android:layout_below="@+id/textView3"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/txtResults" />
 
 
 

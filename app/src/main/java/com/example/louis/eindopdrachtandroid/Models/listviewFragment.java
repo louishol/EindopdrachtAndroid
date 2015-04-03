@@ -1,76 +1,115 @@
 package com.example.louis.eindopdrachtandroid.Models;
 
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.example.louis.eindopdrachtandroid.Adapters.SpinnerAdapter;
+import com.example.louis.eindopdrachtandroid.Adapters.RestaurantAdapter;
 import com.example.louis.eindopdrachtandroid.R;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class listviewFragment extends Fragment {
+public class listviewFragment extends Fragment implements AsyncResponse {
 
-    private ListView listView1;
-
+    Task task;
+    TextView txt;
+    ListView listView;
     public listviewFragment()
     {
-        // Required empty public constructor
-        //url = url;
+        task = new Task();
+        task.delegate = this;
     }
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_listview, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_listview, container, false);
+        listView =  (ListView) rootView.findViewById(R.id.ListZoek);
+        txt = (TextView) rootView.findViewById(R.id.txtResults);
+        txt.setText("Bezig met zoeken....");
+        Bundle b = getActivity().getIntent().getExtras();
+        task.execute(b.getString("url"));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    final int position, long id) {
+
+                final Restaurant restaurant = (Restaurant)listView.getItemAtPosition(position);
 
 
-        List<String> Results =  new ArrayList<String>();
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Maak een keuze")
+                        .setMessage("Details laten zien of navigeren?")
+                        .setPositiveButton("Details", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-        Results.add("Jarno");
-        Results.add("Louis");
-        Results.add("Sander");
-        Results.add("Bert");
-        Results.add("Rick");
-        Results.add("Bennie");
-        Results.add("Bryan");
-        Results.add("Robin");
-        Results.add("Sam");
-        Results.add("Jamie");
-        Results.add("Sven");
-        Results.add("Erwin");
-
-        final SpinnerAdapter adapter = new SpinnerAdapter(getActivity(),android.R.layout.simple_list_item_1, Results);
-
-        listView1 = (ListView) getView().findViewById(R.id.ListZoek);
-        listView1.setAdapter(adapter);
-
-
-        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-
-
-                String selected = (String) listView1.getAdapter().getItem(arg2);
-
-
+                            }
+                        })
+                        .setNegativeButton("Navigeren", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+//                                listener.itemSelected(position, itemValue.title, itemValue.Description);
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
             }
         });
 
+        return rootView;
+    }
+
+    public void processFinish(String output)
+    {
+        JSONArray results = null;
+        ArrayList<Restaurant> Results = new ArrayList<Restaurant>();
+        try {
+
+            JSONObject obj = new JSONObject(output);
+            results= obj.getJSONArray("results");
+            Log.d("My App", obj.toString());
+
+        } catch (Throwable t) {
+
+        }
+        if(results != null)
+        {
+            for (int i = 0; i < results.length(); i++) {
+                try
+                {
+                    JSONObject row = results.getJSONObject(i);
+                    JSONObject geo = row.getJSONObject("geolocation");
+
+                    double lat =  geo.getDouble("latitude");
+                    double lng = geo.getDouble("longitude");
+
+                    Log.d("dddddd", String.valueOf(lat));
+                    Results.add(new Restaurant(row.getInt("id"), row.getString("name"), 4.3123,42.23123));
+
+                } catch (Throwable t) {
+
+                }
+
+            }
+        }
+        txt.setText("Zoek resultaten");
+        final RestaurantAdapter adapter = new RestaurantAdapter(getActivity(),R.layout.listviewitem, Results);
+        listView.setAdapter(adapter);
     }
 }

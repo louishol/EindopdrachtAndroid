@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sorteren op waardering"
-        android:id="@+id/checkBox"
+        android:id="@+id/sort"
         android:layout_below="@+id/spinner"
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
