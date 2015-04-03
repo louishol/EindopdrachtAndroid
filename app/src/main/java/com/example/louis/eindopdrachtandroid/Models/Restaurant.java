@@ -17,7 +17,6 @@ public class Restaurant {
 
     public Restaurant(int id, String title, double lat, double lng) {
 
-        Log.d("LALALA", "Dit is de lat " + lat);
         this.id = id;
         this.title = title;
         this.lng = lng;

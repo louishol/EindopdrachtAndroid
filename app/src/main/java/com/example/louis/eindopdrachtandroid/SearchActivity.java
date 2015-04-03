@@ -1,6 +1,8 @@
 package com.example.louis.eindopdrachtandroid;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,11 +22,25 @@ import com.example.louis.eindopdrachtandroid.Models.*;
 
 public class SearchActivity extends ActionBarActivity {
     Spinner mySpinner;
+    CheckBox myCheckbox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         fillList();
+        getSettings();
+    }
+    private void getSettings()
+    {
+        final SharedPreferences sharedPref= PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        int spinnerwaarde = sharedPref.getInt("spinnertext", 0);
+        boolean checkboxwaarde = sharedPref.getBoolean("waardering", false);
+
+        mySpinner.setSelection(spinnerwaarde);
+        if(checkboxwaarde == true)
+        {
+            myCheckbox.setChecked(true);
+        }
     }
 
     private void fillList()
@@ -90,6 +106,7 @@ public class SearchActivity extends ActionBarActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mySpinner = (Spinner) findViewById(R.id.spinner);
         mySpinner.setAdapter(adapter);
+        myCheckbox = (CheckBox) findViewById(R.id.sort);
 
     }
 
@@ -98,10 +115,10 @@ public class SearchActivity extends ActionBarActivity {
 
         String url = "https://api.eet.nu/venues?";
         String txtFromSpinner = mySpinner.getSelectedItem().toString();
-        CheckBox checkbox = (CheckBox) findViewById(R.id.sort);
+
         if(txtFromSpinner != "Alle categorien")
             url += "tags="+ txtFromSpinner + "&";
-        if(checkbox.isChecked())
+        if(myCheckbox.isChecked())
             url += "sort_by=rating";
         return url;
     }

@@ -1,7 +1,9 @@
 package com.example.louis.eindopdrachtandroid.Models;
 
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -12,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.louis.eindopdrachtandroid.Adapters.RestaurantAdapter;
 import com.example.louis.eindopdrachtandroid.R;
@@ -25,6 +28,14 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class listviewFragment extends Fragment implements AsyncResponse {
+
+    private OnItemSelectedListener listener;
+
+    // Define the events that the fragment will use to communicate
+    public interface OnItemSelectedListener {
+        public void itemSelected(Restaurant restaurant);
+    }
+
 
     Task task;
     TextView txt;
@@ -53,27 +64,15 @@ public class listviewFragment extends Fragment implements AsyncResponse {
 
                 final Restaurant restaurant = (Restaurant)listView.getItemAtPosition(position);
 
+                listener.itemSelected(restaurant);
 
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Maak een keuze")
-                        .setMessage("Details laten zien of navigeren?")
-                        .setPositiveButton("Details", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .setNegativeButton("Navigeren", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-//                                listener.itemSelected(position, itemValue.title, itemValue.Description);
-                            }
-                        })
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .show();
             }
         });
 
+
         return rootView;
     }
+
 
     public void processFinish(String output)
     {
@@ -83,7 +82,6 @@ public class listviewFragment extends Fragment implements AsyncResponse {
 
             JSONObject obj = new JSONObject(output);
             results= obj.getJSONArray("results");
-            Log.d("My App", obj.toString());
 
         } catch (Throwable t) {
 
@@ -99,8 +97,7 @@ public class listviewFragment extends Fragment implements AsyncResponse {
                     double lat =  geo.getDouble("latitude");
                     double lng = geo.getDouble("longitude");
 
-                    Log.d("dddddd", String.valueOf(lat));
-                    Results.add(new Restaurant(row.getInt("id"), row.getString("name"), 4.3123,42.23123));
+                    Results.add(new Restaurant(row.getInt("id"), row.getString("name"), lat, lng));
 
                 } catch (Throwable t) {
 
@@ -111,5 +108,22 @@ public class listviewFragment extends Fragment implements AsyncResponse {
         txt.setText("Zoek resultaten");
         final RestaurantAdapter adapter = new RestaurantAdapter(getActivity(),R.layout.listviewitem, Results);
         listView.setAdapter(adapter);
+    }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+//        try {
+//            mListener = (OnFragmentInteractionListener) activity;
+//        } catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
+
+        if (activity instanceof OnItemSelectedListener) {
+            listener = (OnItemSelectedListener) activity;
+        } else {
+            throw new ClassCastException(activity.toString()
+                    + " must implement MyListFragment.OnItemSelectedListener");
+        }
     }
 }
