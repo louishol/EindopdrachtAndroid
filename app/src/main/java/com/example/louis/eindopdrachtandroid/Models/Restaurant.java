@@ -9,8 +9,8 @@ public class Restaurant {
 
     public int id;
     public String title;
-    double lng;
-    double lat;
+    public double lng;
+    public double lat;
     public Restaurant(){
         super();
     }

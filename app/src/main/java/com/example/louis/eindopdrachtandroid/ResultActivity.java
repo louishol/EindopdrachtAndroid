@@ -3,6 +3,7 @@ package com.example.louis.eindopdrachtandroid;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,7 +64,8 @@ public class ResultActivity extends ActionBarActivity implements listviewFragmen
                 })
                 .setNegativeButton("Navigeren", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-//                                listener.itemSelected(position, itemValue.title, itemValue.Description);
+//
+                        startNavigationActivity(restaurant.lat, restaurant.lng);
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
@@ -85,7 +87,10 @@ public class ResultActivity extends ActionBarActivity implements listviewFragmen
         }
 
     }
-    private void startNavigationActivity() {
+    private void startNavigationActivity(double lat, double lng) {
+
+        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse("google.navigation:q="+lat + "," + lng));
+        startActivity(i);
 
     }
 

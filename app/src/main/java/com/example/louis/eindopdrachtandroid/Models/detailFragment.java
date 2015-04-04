@@ -3,6 +3,7 @@ package com.example.louis.eindopdrachtandroid.Models;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +48,7 @@ public class detailFragment extends Fragment implements AsyncResponse {
         txtCity = (TextView) RootView.findViewById(R.id.txtWoonplaats);
 
         Bundle b = getActivity().getIntent().getExtras();
-        int id = b.getInt("id");
+        int id = Integer.parseInt(b.getString("id"));
         if(id != 0)
         {
             updateContent(id);
@@ -63,6 +64,7 @@ public class detailFragment extends Fragment implements AsyncResponse {
     public void processFinish(String output)
     {
         try {
+            Log.d("Myapp",output);
             JSONObject obj = new JSONObject(output);
             String name = obj.getString("name");
             String description = obj.getString("description");
@@ -74,7 +76,6 @@ public class detailFragment extends Fragment implements AsyncResponse {
             String country = adress.getString("country");
             String street = adress.getString("street");
 
-
             txtCity.setText(city);
             txtPhone.setText(phone);
             txtDescrip.setText(description);
@@ -84,8 +85,8 @@ public class detailFragment extends Fragment implements AsyncResponse {
         }
         catch (Throwable t)
         {
-
-
+            t.printStackTrace();
+            Log.d("Myapp", t.toString());
         }
     }
 }
