@@ -15,10 +15,9 @@
 
         <fragment class="com.example.louis.eindopdrachtandroid.Models.detailFragment"
             android:id="@+id/fragDetails"
+            android:layout_marginStart="100pt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="left|bottom"
-            android:layout_toRightOf="@+id/fragDetails"
             android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
