@@ -48,10 +48,11 @@ public class detailFragment extends Fragment implements AsyncResponse {
         txtCity = (TextView) RootView.findViewById(R.id.txtWoonplaats);
 
         Bundle b = getActivity().getIntent().getExtras();
-        int id = Integer.parseInt(b.getString("id"));
-        if(id != 0)
+
+        String id = b.getString("id");
+        if(id != null)
         {
-            updateContent(id);
+            updateContent(Integer.parseInt(id));
         }
         return RootView;
     }
