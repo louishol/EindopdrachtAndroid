@@ -8,9 +8,11 @@
         android:id="@+id/first_image"
         android:src = "@drawable/eetnu_large"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="0dp"
+        android:scaleType="center"
         android:layout_alignParentTop="true" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,8 +20,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Zoek eenvoudig restaurants bij jouw in de buurt!"
         android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/first_image"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="75dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,17 +30,19 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Via deze App kan er op restaurants gezocht worden, dit door middel van categorie en via waarderingen van klanten."
         android:id="@+id/textView4"
+        android:layout_marginBottom="50dp"
         android:layout_above="@+id/button"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="117dp" />
+        android:layout_alignParentEnd="true" />
+
     <ImageView
-        android:src = "@drawable/end"
-        android:layout_width="400dp"
-        android:layout_height="100dp"
+        android:src = "@drawable/end_large"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="0dp"
+        android:scaleType="center"
         android:id="@+id/imageView"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/button"
-        android:layout_marginEnd="81dp" />
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"

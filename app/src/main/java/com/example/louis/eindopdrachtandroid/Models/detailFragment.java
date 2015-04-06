@@ -60,7 +60,9 @@ public class detailFragment extends Fragment implements AsyncResponse {
 
     public void updateContent(int id)
     {
-        task.execute("https://api.eet.nu/venues/"+id);
+        Task t = new Task();
+        t.delegate = this;
+        t.execute("https://api.eet.nu/venues/"+id);
     }
     public void processFinish(String output)
     {
